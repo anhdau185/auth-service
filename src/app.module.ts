@@ -1,22 +1,12 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { DataSource } from 'typeorm';
 
+import { ormConfig } from 'ormconfig';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
-
-const ormConfig: TypeOrmModuleOptions = {
-  type: 'postgres',
-  host: process.env.POSTGRES_HOST,
-  port: process.env.POSTGRES_PORT,
-  username: process.env.POSTGRES_USERNAME,
-  password: process.env.POSTGRES_PASSWORD,
-  database: process.env.POSTGRES_DATABASE,
-  entities: ['dist/**/*.entity.js'],
-  autoLoadEntities: true,
-  synchronize: true,
-};
 
 @Module({
   imports: [
@@ -27,4 +17,6 @@ const ormConfig: TypeOrmModuleOptions = {
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(private dataSource: DataSource) {}
+}

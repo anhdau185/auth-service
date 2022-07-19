@@ -1,0 +1,2 @@
+# Ignore db migrations
+src/db/migrations/*
