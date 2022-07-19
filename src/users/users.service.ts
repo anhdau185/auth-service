@@ -9,26 +9,27 @@ import { UserDto } from './user.dto';
 export class UsersService {
   constructor(
     @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
+    private readonly usersRepository: Repository<User>,
   ) {}
 
-  createUser(user: UserDto) {
-    return this.userRepository.save(user);
+  async createUser(user: UserDto): Promise<User> {
+    return this.usersRepository.save(user);
   }
 
-  findAllUsers() {
-    return this.userRepository.find();
+  async findAllUsers(): Promise<User[]> {
+    return this.usersRepository.find();
   }
 
-  findOneUser(id: number) {
-    return this.userRepository.findOneBy({ id });
+  async findOneUser(id: number): Promise<User> {
+    return this.usersRepository.findOneBy({ id });
   }
 
-  updateUser(id: number, user: UserDto) {
-    return this.userRepository.update(id, user);
+  async updateUser(id: number, user: UserDto): Promise<User> {
+    await this.usersRepository.update(id, user);
+    return this.usersRepository.findOneBy({ id });
   }
 
-  deleteUser(id: number) {
-    return this.userRepository.delete(id);
+  async deleteUser(id: number): Promise<void> {
+    this.usersRepository.delete(id);
   }
 }
