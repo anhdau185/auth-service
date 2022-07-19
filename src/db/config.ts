@@ -11,7 +11,7 @@ export const getOrmConfig = (): PostgresConnectionOptions => {
     password: process.env.DATABASE_PASSWORD,
     database: process.env.DATABASE_NAME,
     synchronize: false,
-    entities: ['dist/src/**/*.entity.js'],
-    migrations: ['dist/src/db/migrations/*.js'],
+    entities: ['dist/**/*.entity.js'],
+    migrations: ['dist/db/migrations/*.js'],
   };
 };
