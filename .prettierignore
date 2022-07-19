@@ -1,2 +1,5 @@
 # Ignore db migrations
 src/db/migrations/*
+
+# Ignore build directory
+dist/*
