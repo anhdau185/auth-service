@@ -3,12 +3,13 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
   Param,
   Patch,
   Post,
 } from '@nestjs/common';
-import { UserDto } from './user.dto';
 
+import { UserDto } from './user.dto';
 import { UsersService } from './users.service';
 
 @Controller('users')
@@ -16,6 +17,7 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
+  @HttpCode(201)
   create(@Body() user: UserDto) {
     return this.usersService.createUser(user);
   }
@@ -36,7 +38,8 @@ export class UsersController {
   }
 
   @Delete(':id')
+  @HttpCode(204)
   delete(@Param('id') id: string) {
-    return this.usersService.deleteUser(parseInt(id));
+    this.usersService.deleteUser(parseInt(id));
   }
 }
