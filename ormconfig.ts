@@ -1,14 +1,16 @@
-import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { DataSource } from 'typeorm';
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
 
-export const ormConfig: TypeOrmModuleOptions & PostgresConnectionOptions = {
+export const ormConfig: PostgresConnectionOptions = {
   type: 'postgres',
-  host: process.env.POSTGRES_HOST,
-  port: parseInt(process.env.POSTGRES_PORT),
-  username: process.env.POSTGRES_USERNAME,
-  password: process.env.POSTGRES_PASSWORD,
-  database: process.env.POSTGRES_DATABASE,
+  host: '127.0.0.1',
+  port: 5432,
+  username: 'postgres',
+  password: 'password',
+  database: 'auth_service_dev01',
   synchronize: false,
   entities: ['dist/src/**/*.entity.js'],
   migrations: ['dist/src/db/migrations/*.js'],
 };
+
+export const dataSource = new DataSource(ormConfig);
