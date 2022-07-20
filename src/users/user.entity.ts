@@ -5,7 +5,7 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ default: 'Unnamed User' })
+  @Column({ nullable: true, default: 'Unnamed User' })
   name: string;
 
   @Column()
