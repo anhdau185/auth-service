@@ -1,8 +1,8 @@
-import * as dotenv from 'dotenv';
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
+import { setUpEnv } from '../shared/utils';
 
 export const getOrmConfig = (): PostgresConnectionOptions => {
-  dotenv.config();
+  setUpEnv();
   return {
     type: 'postgres',
     host: process.env.DATABASE_HOST,
