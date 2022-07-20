@@ -1,4 +1,4 @@
-# Ignore db migrations
+# Ignore migration files
 src/db/migrations/*
 
 # Ignore build directory
