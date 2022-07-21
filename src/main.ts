@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 
-import { setUpEnv } from './shared/utils';
+import setUpEnv from './shared/utils/setUpEnv';
 import { AppModule } from './app.module';
 
 async function bootstrap() {

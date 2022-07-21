@@ -1,5 +1,5 @@
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
-import { setUpEnv } from '../shared/utils';
+import setUpEnv from '../shared/utils/setUpEnv';
 
 export const getOrmConfig = (): PostgresConnectionOptions => {
   setUpEnv();
