@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   HttpCode,
+  HttpException,
   Param,
   Patch,
   Post,
@@ -19,8 +20,8 @@ export class UsersController {
 
   @Post()
   @HttpCode(201)
-  async create(@Body() user: UserDto) {
-    const createdUser = await this.usersService.createUser(user);
+  async create(@Body() userData: UserDto) {
+    const createdUser = await this.usersService.createUser(userData);
     return concealCredentials(createdUser);
   }
 
@@ -33,6 +34,10 @@ export class UsersController {
   @Get(':id')
   async get(@Param('id') id: string) {
     const user = await this.usersService.findOneUser({ id: parseInt(id) });
+    if (!user) {
+      throw new HttpException('User not found', 404);
+    }
+
     return concealCredentials(user);
   }
 
