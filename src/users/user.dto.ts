@@ -1,7 +1,7 @@
 export class UserDto {
-  id?: number;
-  name?: string;
-  username?: string;
-  password?: string;
-  scope?: string;
+  public id?: number;
+  public name?: string;
+  public username?: string;
+  public password?: string;
+  public scope?: string;
 }
