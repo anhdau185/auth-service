@@ -11,6 +11,7 @@ import {
 
 import { UserDto } from './user.dto';
 import { UsersService } from './users.service';
+import { concealCredentials } from './users.utils';
 
 @Controller('users')
 export class UsersController {
@@ -18,28 +19,32 @@ export class UsersController {
 
   @Post()
   @HttpCode(201)
-  create(@Body() user: UserDto) {
-    return this.usersService.createUser(user);
+  async create(@Body() user: UserDto) {
+    const createdUser = await this.usersService.createUser(user);
+    return concealCredentials(createdUser);
   }
 
   @Get()
-  list() {
-    return this.usersService.findAllUsers();
+  async list() {
+    const users = await this.usersService.findAllUsers();
+    return users.map(concealCredentials);
   }
 
   @Get(':id')
-  get(@Param('id') id: string) {
-    return this.usersService.findOneUser({ id: parseInt(id) });
+  async get(@Param('id') id: string) {
+    const user = await this.usersService.findOneUser({ id: parseInt(id) });
+    return concealCredentials(user);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() user: UserDto) {
-    return this.usersService.updateUser(parseInt(id), user);
+  async update(@Param('id') id: string, @Body() user: UserDto) {
+    const updatedUser = await this.usersService.updateUser(parseInt(id), user);
+    return concealCredentials(updatedUser);
   }
 
   @Delete(':id')
   @HttpCode(204)
-  delete(@Param('id') id: string) {
+  async delete(@Param('id') id: string) {
     this.usersService.deleteUser(parseInt(id));
   }
 }
