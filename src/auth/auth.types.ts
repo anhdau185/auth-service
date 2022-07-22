@@ -1,7 +1,6 @@
 import { Request } from 'express';
-import { User } from '../users/user.entity';
 
-export type AuthenticatedRequest = Omit<Request, 'user'> & { user: User };
+export type AuthenticatedRequest<T> = Omit<Request, 'user'> & { user: T };
 
 export interface UserCredentials {
   username: string;
