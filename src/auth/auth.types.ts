@@ -7,3 +7,8 @@ export interface UserCredentials {
   username: string;
   password: string;
 }
+
+export interface JwtPayload {
+  name: string;
+  sub: number;
+}
