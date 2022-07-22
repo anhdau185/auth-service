@@ -1,9 +1,9 @@
 import * as dotenv from 'dotenv';
 
-function setUpEnv() {
+function loadEnv() {
   if (process.env.MODE === undefined) {
     dotenv.config();
   }
 }
 
-export default setUpEnv;
+export default loadEnv;

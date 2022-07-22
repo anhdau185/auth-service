@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 
-import setUpEnv from './shared/utils/setUpEnv';
+import loadEnv from './shared/utils/loadEnv';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
@@ -9,5 +9,5 @@ async function bootstrap() {
   await app.listen(port);
 }
 
-setUpEnv();
+loadEnv();
 bootstrap();
