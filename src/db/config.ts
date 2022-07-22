@@ -1,8 +1,8 @@
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
-import setUpEnv from '../shared/utils/setUpEnv';
+import loadEnv from '../shared/utils/loadEnv';
 
 export const getOrmConfig = (): PostgresConnectionOptions => {
-  setUpEnv();
+  loadEnv();
   return {
     type: 'postgres',
     host: process.env.DATABASE_HOST,
