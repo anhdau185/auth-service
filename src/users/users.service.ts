@@ -27,7 +27,7 @@ export class UsersService {
     return this.usersRepository.find();
   }
 
-  async findOneUser(where: FindOptionsWhere<User>): Promise<User> {
+  async findOneUser(where: FindOptionsWhere<User>): Promise<User | null> {
     return this.usersRepository.findOneBy(where);
   }
 
