@@ -6,8 +6,7 @@ import loadEnv from '../shared/utils/loadEnv';
 import { UsersModule } from '../users/users.module';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
-import { LocalStrategy } from './local.strategy';
-import { JwtStrategy } from './jwt.strategy';
+import { LocalStrategy, JwtStrategy } from './strategies';
 
 loadEnv();
 
