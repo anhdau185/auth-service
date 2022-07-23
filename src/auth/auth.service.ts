@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
-import comparePasswords from '../shared/utils/comparePasswords';
+import compareHash from '../shared/utils/compareHash';
 import { UsersService } from '../users/users.service';
 import { User } from '../users/user.entity';
 import { JwtPayload } from './auth.types';
@@ -16,7 +16,7 @@ export class AuthService {
   async validateUser(username: string, password: string): Promise<User | null> {
     const user = await this.usersService.findOneUser({ username });
     if (user == null) return null;
-    const isPasswordCorrect = await comparePasswords(password, user.password);
+    const isPasswordCorrect = await compareHash(password, user.password);
     return isPasswordCorrect ? user : null;
   }
 
