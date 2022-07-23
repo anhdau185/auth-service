@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FindOptionsWhere, Repository } from 'typeorm';
 
-import hashPassword from '../shared/utils/hashPassword';
+import hashData from '../shared/utils/hashData';
 import { User } from './user.entity';
 import { UserDto } from './user.dto';
 
@@ -14,7 +14,7 @@ export class UsersService {
   ) {}
 
   async createUser(rawUserData: UserDto): Promise<User> {
-    const hashedPassword = await hashPassword(rawUserData.password);
+    const hashedPassword = await hashData(rawUserData.password);
     const processedUserData: UserDto = {
       ...rawUserData,
       password: hashedPassword,
