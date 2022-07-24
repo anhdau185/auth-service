@@ -6,22 +6,13 @@ import loadEnv from '../shared/utils/loadEnv';
 import { UsersModule } from '../users/users.module';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
-import { LocalStrategy, JwtStrategy } from './strategies';
+import { LocalStrategy, JwtStrategy, JwtRefreshStrategy } from './strategies';
 
 loadEnv();
 
 @Module({
-  imports: [
-    UsersModule,
-    PassportModule,
-    JwtModule.register({
-      secret: process.env.JWT_SECRET_KEY,
-      signOptions: {
-        expiresIn: parseInt(process.env.JWT_EXPIRATION_TIME),
-      },
-    }),
-  ],
+  imports: [UsersModule, PassportModule, JwtModule.register({})],
   controllers: [AuthController],
-  providers: [AuthService, LocalStrategy, JwtStrategy],
+  providers: [AuthService, LocalStrategy, JwtStrategy, JwtRefreshStrategy],
 })
 export class AuthModule {}
