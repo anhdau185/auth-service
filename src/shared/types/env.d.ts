@@ -10,6 +10,8 @@ declare global {
       DATABASE_NAME?: string;
       JWT_SECRET_KEY?: string;
       JWT_EXPIRATION_TIME?: string;
+      JWT_REFRESH_SECRET_KEY?: string;
+      JWT_REFRESH_EXPIRATION_TIME?: string;
     }
   }
 }
