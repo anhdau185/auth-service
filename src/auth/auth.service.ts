@@ -4,14 +4,16 @@ import { JwtService } from '@nestjs/jwt';
 import compareHash from '../shared/utils/compareHash';
 import getNowTimestampSecs from '../shared/utils/getNowTimestampSecs';
 import { UsersService } from '../users/users.service';
+import { TokensService } from '../tokens/tokens.service';
 import { User } from '../users/user.entity';
-import { JwtPayload, ExtendedJwtPayload, Tokens } from './auth.types';
+import { JwtPayload, ExtendedJwtPayload, JWTs } from './auth.types';
 
 @Injectable()
 export class AuthService {
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
+    private tokensService: TokensService,
   ) {}
 
   async validateUser(username: string, password: string): Promise<User | null> {
@@ -21,19 +23,17 @@ export class AuthService {
     return isPasswordCorrect ? user : null;
   }
 
-  async issueTokens(user: User): Promise<Tokens> {
-    const payload: JwtPayload = {
+  async issueTokens(user: User): Promise<JWTs> {
+    const tokens = await this.generateTokens({
       name: user.name,
       sub: user.id,
-    };
-
-    const tokens = await this.generateTokens(payload);
-    // TODO: Save hash of refresh token in combination with user info to database
+    });
+    await this.saveTokenToDatabase(tokens.refresh_token); // save refresh token to database for monitoring
 
     return tokens;
   }
 
-  async reissueTokens(extendedPayload: ExtendedJwtPayload): Promise<Tokens> {
+  async reissueTokens(extendedPayload: ExtendedJwtPayload): Promise<JWTs> {
     const tokens = await this.generateTokens(extendedPayload);
     // TODO: Save hash of new refresh token in combination with user info to database
     // as well as invalidate old refresh token
@@ -43,7 +43,7 @@ export class AuthService {
 
   private async generateTokens(
     extendedPayload: ExtendedJwtPayload,
-  ): Promise<Tokens> {
+  ): Promise<JWTs> {
     const payload: JwtPayload = {
       name: extendedPayload.name,
       sub: extendedPayload.sub,
@@ -73,7 +73,26 @@ export class AuthService {
     };
   }
 
+  private async saveTokenToDatabase(token: string): Promise<void> {
+    const {
+      sub: userId,
+      iat: createdAt,
+      exp: validUntil,
+    } = this.decodeToken(token);
+
+    await this.tokensService.saveNewTokenForUser({
+      token,
+      userId,
+      createdAt,
+      validUntil,
+    });
+  }
+
   private getRemainingSecsTo(targetTimestampSecs: number): number {
     return targetTimestampSecs - getNowTimestampSecs();
+  }
+
+  private decodeToken(token: string): Partial<JwtPayload> {
+    return (this.jwtService.decode(token) as Required<JwtPayload>) || {};
   }
 }
