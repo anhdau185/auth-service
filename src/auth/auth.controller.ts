@@ -10,8 +10,7 @@ import {
 import { User } from '../users/user.entity';
 import { AuthenticatedRequest } from './auth.types';
 import { AuthService } from './auth.service';
-import { LocalAuthGuard } from './local.guard';
-import { JwtAuthGuard } from './jwt.guard';
+import { LocalAuthGuard, JwtAuthGuard } from './guards';
 
 @Controller('auth')
 export class AuthController {

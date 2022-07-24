@@ -11,7 +11,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 
-import { JwtAuthGuard } from '../auth/jwt.guard';
+import { JwtAuthGuard } from '../auth/guards';
 import { UserDto } from './user.dto';
 import { UsersService } from './users.service';
 import { concealCredentials } from './users.utils';
