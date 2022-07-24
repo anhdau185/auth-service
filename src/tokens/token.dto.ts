@@ -3,5 +3,4 @@ export class TokenDto {
   public userId: number;
   public createdAt?: number;
   public validUntil?: number;
-  public lastUsedAt?: number;
 }
