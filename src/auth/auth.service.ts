@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
 import compareHash from '../shared/utils/compareHash';
+import getNowTimestampSecs from '../shared/utils/getNowTimestampSecs';
 import { UsersService } from '../users/users.service';
 import { User } from '../users/user.entity';
 import { JwtPayload, ExtendedJwtPayload, Tokens } from './auth.types';
@@ -52,7 +53,7 @@ export class AuthService {
     const accessTokenExpiresIn = parseInt(process.env.JWT_EXPIRATION_TIME);
     const refreshTokenExpiresIn =
       refreshTokenExpiresAt !== undefined
-        ? this.getRemainingSecondsTo(refreshTokenExpiresAt)
+        ? this.getRemainingSecsTo(refreshTokenExpiresAt)
         : parseInt(process.env.JWT_REFRESH_EXPIRATION_TIME);
 
     const [accessToken, refreshToken] = await Promise.all([
@@ -72,8 +73,7 @@ export class AuthService {
     };
   }
 
-  private getRemainingSecondsTo(targetTimestamp: number): number {
-    const nowTimestamp = Math.floor(Date.now() / 1000);
-    return targetTimestamp - nowTimestamp;
+  private getRemainingSecsTo(targetTimestampSecs: number): number {
+    return targetTimestampSecs - getNowTimestampSecs();
   }
 }
