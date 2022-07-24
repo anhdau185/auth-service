@@ -4,7 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import compareHash from '../shared/utils/compareHash';
 import { UsersService } from '../users/users.service';
 import { User } from '../users/user.entity';
-import { JwtPayload, ExtendedJwtPayload, JwtTokens } from './auth.types';
+import { JwtPayload, ExtendedJwtPayload, Tokens } from './auth.types';
 
 @Injectable()
 export class AuthService {
@@ -20,7 +20,7 @@ export class AuthService {
     return isPasswordCorrect ? user : null;
   }
 
-  async signIn(user: User): Promise<JwtTokens> {
+  async signIn(user: User): Promise<Tokens> {
     const payload: JwtPayload = {
       name: user.name,
       sub: user.id,
@@ -32,7 +32,7 @@ export class AuthService {
     return tokens;
   }
 
-  async refreshTokens(extendedPayload: ExtendedJwtPayload): Promise<JwtTokens> {
+  async refreshTokens(extendedPayload: ExtendedJwtPayload): Promise<Tokens> {
     const tokens = await this.generateTokens(extendedPayload);
     // TODO: Save hash of new refresh token in combination with user info to database
     // as well as invalidate old refresh token
@@ -42,7 +42,7 @@ export class AuthService {
 
   private async generateTokens(
     extendedPayload: ExtendedJwtPayload,
-  ): Promise<JwtTokens> {
+  ): Promise<Tokens> {
     const payload: JwtPayload = {
       name: extendedPayload.name,
       sub: extendedPayload.sub,
@@ -55,14 +55,16 @@ export class AuthService {
         ? this.getRemainingSecondsTo(refreshTokenExpiresAt)
         : parseInt(process.env.JWT_REFRESH_EXPIRATION_TIME);
 
-    const accessToken = await this.jwtService.signAsync(payload, {
-      secret: process.env.JWT_SECRET_KEY,
-      expiresIn: accessTokenExpiresIn,
-    });
-    const refreshToken = await this.jwtService.signAsync(payload, {
-      secret: process.env.JWT_REFRESH_SECRET_KEY,
-      expiresIn: refreshTokenExpiresIn,
-    });
+    const [accessToken, refreshToken] = await Promise.all([
+      this.jwtService.signAsync(payload, {
+        secret: process.env.JWT_SECRET_KEY,
+        expiresIn: accessTokenExpiresIn,
+      }),
+      this.jwtService.signAsync(payload, {
+        secret: process.env.JWT_REFRESH_SECRET_KEY,
+        expiresIn: refreshTokenExpiresIn,
+      }),
+    ]);
 
     return {
       access_token: accessToken,

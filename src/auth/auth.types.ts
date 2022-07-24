@@ -18,7 +18,7 @@ export interface ExtendedJwtPayload extends JwtPayload {
   exp_refresh?: number;
 }
 
-export interface JwtTokens {
+export interface Tokens {
   access_token: string;
   refresh_token: string;
 }
