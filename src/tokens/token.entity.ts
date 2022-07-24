@@ -16,7 +16,4 @@ export class Token {
 
   @Column({ nullable: true })
   validUntil: number | null;
-
-  @Column({ nullable: true })
-  lastUsedAt: number | null;
 }
