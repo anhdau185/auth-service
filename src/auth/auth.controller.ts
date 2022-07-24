@@ -20,7 +20,7 @@ export class AuthController {
   @Post('login')
   @HttpCode(200)
   login(@Req() req: AuthenticatedRequest<User>) {
-    return this.authService.signIn(req.user);
+    return this.authService.issueTokens(req.user);
   }
 
   @UseGuards(JwtAuthGuard)
@@ -32,6 +32,6 @@ export class AuthController {
   @UseGuards(JwtRefreshAuthGuard)
   @Get('refresh')
   refresh(@Req() req: AuthenticatedRequest<ExtendedJwtPayload>) {
-    return this.authService.refreshTokens(req.user);
+    return this.authService.reissueTokens(req.user);
   }
 }

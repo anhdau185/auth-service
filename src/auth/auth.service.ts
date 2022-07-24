@@ -20,7 +20,7 @@ export class AuthService {
     return isPasswordCorrect ? user : null;
   }
 
-  async signIn(user: User): Promise<Tokens> {
+  async issueTokens(user: User): Promise<Tokens> {
     const payload: JwtPayload = {
       name: user.name,
       sub: user.id,
@@ -32,7 +32,7 @@ export class AuthService {
     return tokens;
   }
 
-  async refreshTokens(extendedPayload: ExtendedJwtPayload): Promise<Tokens> {
+  async reissueTokens(extendedPayload: ExtendedJwtPayload): Promise<Tokens> {
     const tokens = await this.generateTokens(extendedPayload);
     // TODO: Save hash of new refresh token in combination with user info to database
     // as well as invalidate old refresh token
