@@ -10,7 +10,12 @@ import {
 import { User } from '../users/user.entity';
 import { AuthenticatedRequest, ExtendedJwtPayload } from './auth.types';
 import { AuthService } from './auth.service';
-import { LocalAuthGuard, JwtAuthGuard, JwtRefreshAuthGuard } from './guards';
+import {
+  LocalAuthGuard,
+  JwtAuthGuard,
+  JwtRefreshAuthGuard,
+  JwtLogoutAuthGuard,
+} from './guards';
 
 @Controller('auth')
 export class AuthController {
@@ -30,8 +35,16 @@ export class AuthController {
   }
 
   @UseGuards(JwtRefreshAuthGuard)
-  @Get('refresh')
+  @Post('refresh')
+  @HttpCode(200)
   refresh(@Req() req: AuthenticatedRequest<ExtendedJwtPayload>) {
     return this.authService.reissueTokens(req.user);
+  }
+
+  @UseGuards(JwtLogoutAuthGuard)
+  @Post('logout')
+  @HttpCode(204)
+  logout(@Req() req: AuthenticatedRequest<number>) {
+    this.authService.revokeAccessWithUserId(req.user);
   }
 }

@@ -2,47 +2,66 @@ import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
 import compareHash from '../shared/utils/compareHash';
+import getNowTimestampSecs from '../shared/utils/getNowTimestampSecs';
 import { UsersService } from '../users/users.service';
+import { TokensService } from '../tokens/tokens.service';
 import { User } from '../users/user.entity';
-import { JwtPayload, ExtendedJwtPayload, Tokens } from './auth.types';
+import { JwtPayload, ExtendedJwtPayload, JWTs } from './auth.types';
 
 @Injectable()
 export class AuthService {
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
+    private tokensService: TokensService,
   ) {}
 
   async validateUser(username: string, password: string): Promise<User | null> {
     const user = await this.usersService.findOneUser({ username });
+
     if (user == null) return null;
+
     const isPasswordCorrect = await compareHash(password, user.password);
     return isPasswordCorrect ? user : null;
   }
 
-  async issueTokens(user: User): Promise<Tokens> {
-    const payload: JwtPayload = {
+  async verifyRefreshToken(token: string): Promise<boolean> {
+    const { sub: userId } = this.decodeToken(token);
+    const tokenData = await this.tokensService.findOneToken({ userId });
+
+    if (tokenData == null) return false;
+    return token === tokenData.token;
+  }
+
+  async issueTokens(user: User): Promise<JWTs> {
+    const tokens = await this.generateTokens({
       name: user.name,
       sub: user.id,
-    };
-
-    const tokens = await this.generateTokens(payload);
-    // TODO: Save hash of refresh token in combination with user info to database
+    });
+    await this.monitorTokenServerSide(tokens.refresh_token); // save new refresh token to database for monitoring
 
     return tokens;
   }
 
-  async reissueTokens(extendedPayload: ExtendedJwtPayload): Promise<Tokens> {
+  async reissueTokens(extendedPayload: ExtendedJwtPayload): Promise<JWTs> {
     const tokens = await this.generateTokens(extendedPayload);
-    // TODO: Save hash of new refresh token in combination with user info to database
-    // as well as invalidate old refresh token
+    await this.monitorTokenServerSide(tokens.refresh_token); // save renewed refresh token to database for monitoring
 
     return tokens;
+  }
+
+  async revokeAccessWithUserId(userId: number): Promise<void> {
+    this.tokensService.deleteIfExists({ userId });
+  }
+
+  async revokeAccessWithToken(token: string): Promise<void> {
+    const { sub: userId } = this.decodeToken(token);
+    this.revokeAccessWithUserId(userId);
   }
 
   private async generateTokens(
     extendedPayload: ExtendedJwtPayload,
-  ): Promise<Tokens> {
+  ): Promise<JWTs> {
     const payload: JwtPayload = {
       name: extendedPayload.name,
       sub: extendedPayload.sub,
@@ -52,7 +71,7 @@ export class AuthService {
     const accessTokenExpiresIn = parseInt(process.env.JWT_EXPIRATION_TIME);
     const refreshTokenExpiresIn =
       refreshTokenExpiresAt !== undefined
-        ? this.getRemainingSecondsTo(refreshTokenExpiresAt)
+        ? this.getRemainingSecsTo(refreshTokenExpiresAt)
         : parseInt(process.env.JWT_REFRESH_EXPIRATION_TIME);
 
     const [accessToken, refreshToken] = await Promise.all([
@@ -72,8 +91,26 @@ export class AuthService {
     };
   }
 
-  private getRemainingSecondsTo(targetTimestamp: number): number {
-    const nowTimestamp = Math.floor(Date.now() / 1000);
-    return targetTimestamp - nowTimestamp;
+  private async monitorTokenServerSide(token: string): Promise<void> {
+    const {
+      sub: userId,
+      iat: createdAt,
+      exp: validUntil,
+    } = this.decodeToken(token);
+
+    this.tokensService.saveNewTokenForUser({
+      token,
+      userId,
+      createdAt,
+      validUntil,
+    });
+  }
+
+  private getRemainingSecsTo(targetTimestampSecs: number): number {
+    return targetTimestampSecs - getNowTimestampSecs();
+  }
+
+  private decodeToken(token: string): Partial<JwtPayload> {
+    return (this.jwtService.decode(token) as Required<JwtPayload>) || {};
   }
 }
