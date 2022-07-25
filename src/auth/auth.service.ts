@@ -18,9 +18,19 @@ export class AuthService {
 
   async validateUser(username: string, password: string): Promise<User | null> {
     const user = await this.usersService.findOneUser({ username });
+
     if (user == null) return null;
+
     const isPasswordCorrect = await compareHash(password, user.password);
     return isPasswordCorrect ? user : null;
+  }
+
+  async verifyRefreshToken(token: string): Promise<boolean> {
+    const { sub: userId } = this.decodeToken(token);
+    const tokenData = await this.tokensService.findOneToken({ userId });
+
+    if (tokenData == null) return false;
+    return token === tokenData.token;
   }
 
   async issueTokens(user: User): Promise<JWTs> {
@@ -28,17 +38,25 @@ export class AuthService {
       name: user.name,
       sub: user.id,
     });
-    await this.saveTokenToDatabase(tokens.refresh_token); // save refresh token to database for monitoring
+    await this.monitorTokenServerSide(tokens.refresh_token); // save new refresh token to database for monitoring
 
     return tokens;
   }
 
   async reissueTokens(extendedPayload: ExtendedJwtPayload): Promise<JWTs> {
     const tokens = await this.generateTokens(extendedPayload);
-    // TODO: Save hash of new refresh token in combination with user info to database
-    // as well as invalidate old refresh token
+    await this.monitorTokenServerSide(tokens.refresh_token); // save renewed refresh token to database for monitoring
 
     return tokens;
+  }
+
+  async revokeAccessWithUserId(userId: number): Promise<void> {
+    this.tokensService.deleteIfExists({ userId });
+  }
+
+  async revokeAccessWithToken(token: string): Promise<void> {
+    const { sub: userId } = this.decodeToken(token);
+    this.revokeAccessWithUserId(userId);
   }
 
   private async generateTokens(
@@ -73,14 +91,14 @@ export class AuthService {
     };
   }
 
-  private async saveTokenToDatabase(token: string): Promise<void> {
+  private async monitorTokenServerSide(token: string): Promise<void> {
     const {
       sub: userId,
       iat: createdAt,
       exp: validUntil,
     } = this.decodeToken(token);
 
-    await this.tokensService.saveNewTokenForUser({
+    this.tokensService.saveNewTokenForUser({
       token,
       userId,
       createdAt,

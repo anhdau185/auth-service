@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FindOptionsWhere, Repository } from 'typeorm';
 
-import hashData from '../shared/utils/hashData';
 import { Token } from './token.entity';
 import { TokenDto } from './token.dto';
 
@@ -15,18 +14,15 @@ export class TokensService {
 
   async saveNewTokenForUser(data: TokenDto): Promise<Token> {
     await this.deleteIfExists({ userId: data.userId });
-
-    const hashedToken = await hashData(data.token);
-    const processedData: TokenDto = {
-      ...data,
-      token: hashedToken,
-    };
-
-    return this.tokensRepository.save(processedData);
+    return this.tokensRepository.save(data);
   }
 
-  private async deleteIfExists(where: FindOptionsWhere<Token>): Promise<void> {
-    const existingRecord = await this.tokensRepository.findOneBy(where);
+  async findOneToken(where: FindOptionsWhere<Token>): Promise<Token> {
+    return this.tokensRepository.findOneBy(where);
+  }
+
+  async deleteIfExists(where: FindOptionsWhere<Token>): Promise<void> {
+    const existingRecord = await this.findOneToken(where);
     if (existingRecord == null) return;
     await this.tokensRepository.delete(existingRecord.id);
   }
