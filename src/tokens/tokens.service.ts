@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FindOptionsWhere, Repository } from 'typeorm';
 
+import hashData from '../shared/utils/hashData';
+import getTokenSignature from '../shared/utils/getTokenSignature';
 import { Token } from './token.entity';
 import { TokenDto } from './token.dto';
 
@@ -14,7 +16,15 @@ export class TokensService {
 
   async saveNewTokenForUser(data: TokenDto): Promise<Token> {
     await this.deleteIfExists({ userId: data.userId });
-    return this.tokensRepository.save(data);
+
+    const tokenSignature = getTokenSignature(data.token);
+    const hashedTokenSignature = await hashData(tokenSignature);
+
+    const processedData: TokenDto = {
+      ...data,
+      token: hashedTokenSignature,
+    };
+    return this.tokensRepository.save(processedData);
   }
 
   async findOneToken(where: FindOptionsWhere<Token>): Promise<Token> {

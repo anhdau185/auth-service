@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
 import compareHash from '../shared/utils/compareHash';
+import getTokenSignature from '../shared/utils/getTokenSignature';
 import getNowTimestampSecs from '../shared/utils/getNowTimestampSecs';
 import { UsersService } from '../users/users.service';
 import { TokensService } from '../tokens/tokens.service';
@@ -30,7 +31,12 @@ export class AuthService {
     const tokenData = await this.tokensService.findOneToken({ userId });
 
     if (tokenData == null) return false;
-    return token === tokenData.token;
+
+    const signaturesMatchExactly = await compareHash(
+      getTokenSignature(token),
+      tokenData.token,
+    );
+    return signaturesMatchExactly;
   }
 
   async issueTokens(user: User): Promise<JWTs> {

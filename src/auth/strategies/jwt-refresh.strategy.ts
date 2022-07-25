@@ -25,7 +25,7 @@ export class JwtRefreshStrategy extends PassportStrategy(
     payload: JwtPayload,
   ): Promise<ExtendedJwtPayload> {
     const refreshToken = this.getBearerTokenFromRequest(req);
-    await this.verifyRefreshTokenAuthenticity(refreshToken);
+    await this.rejectIfUnauthenticRefreshToken(refreshToken);
 
     return {
       sub: payload.sub,
@@ -34,15 +34,13 @@ export class JwtRefreshStrategy extends PassportStrategy(
     };
   }
 
-  private async verifyRefreshTokenAuthenticity(token: string): Promise<void> {
+  private async rejectIfUnauthenticRefreshToken(token: string): Promise<void> {
     const isTokenAuthentic = await this.authService.verifyRefreshToken(token);
 
     if (isTokenAuthentic) return;
 
     await this.authService.revokeAccessWithToken(token);
-    throw new UnauthorizedException(
-      'Potentially compromised token detected! Logging you out...',
-    );
+    throw new UnauthorizedException('Unauthentic token');
   }
 
   private getBearerTokenFromRequest(req: Request): string {
