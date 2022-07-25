@@ -24,18 +24,14 @@ export class JwtRefreshStrategy extends PassportStrategy(
     req: Request,
     payload: JwtPayload,
   ): Promise<ExtendedJwtPayload> {
-    const isLogout = (req.route.path as string).includes('logout');
     const refreshToken = this.getBearerTokenFromRequest(req);
-    const extendedPayload: ExtendedJwtPayload = {
+    await this.verifyRefreshTokenAuthenticity(refreshToken);
+
+    return {
       sub: payload.sub,
       name: payload.name,
       exp_refresh: payload.exp,
     };
-
-    if (!isLogout) {
-      await this.verifyRefreshTokenAuthenticity(refreshToken);
-    }
-    return extendedPayload;
   }
 
   private async verifyRefreshTokenAuthenticity(token: string): Promise<void> {
