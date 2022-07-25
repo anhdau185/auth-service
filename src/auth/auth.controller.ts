@@ -30,8 +30,16 @@ export class AuthController {
   }
 
   @UseGuards(JwtRefreshAuthGuard)
-  @Get('refresh')
+  @Post('refresh')
+  @HttpCode(200)
   refresh(@Req() req: AuthenticatedRequest<ExtendedJwtPayload>) {
     return this.authService.reissueTokens(req.user);
+  }
+
+  @UseGuards(JwtRefreshAuthGuard)
+  @Post('logout')
+  @HttpCode(204)
+  logout(@Req() req: AuthenticatedRequest<ExtendedJwtPayload>) {
+    this.authService.revokeAccessWithUserId(req.user.sub);
   }
 }
