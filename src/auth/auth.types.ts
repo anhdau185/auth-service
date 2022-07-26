@@ -22,3 +22,8 @@ export interface JWTs {
   access_token: string;
   refresh_token: string;
 }
+
+export interface RevokeOptions {
+  usingUserId?: number;
+  usingToken?: string;
+}
