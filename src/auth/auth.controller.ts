@@ -1,11 +1,4 @@
-import {
-  Controller,
-  Get,
-  HttpCode,
-  Post,
-  Req,
-  UseGuards,
-} from '@nestjs/common';
+import { Controller, HttpCode, Post, Req, UseGuards } from '@nestjs/common';
 
 import { User } from '../users/user.entity';
 import { AuthenticatedRequest, ExtendedJwtPayload } from './auth.types';
@@ -29,7 +22,7 @@ export class AuthController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get('protected')
+  @Post('protected')
   authorize(@Req() req: AuthenticatedRequest<Pick<User, 'id' | 'name'>>) {
     return req.user;
   }
