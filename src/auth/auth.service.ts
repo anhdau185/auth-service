@@ -7,7 +7,12 @@ import getNowTimestampSecs from '../shared/utils/getNowTimestampSecs';
 import { UsersService } from '../users/users.service';
 import { TokensService } from '../tokens/tokens.service';
 import { User } from '../users/user.entity';
-import { JwtPayload, ExtendedJwtPayload, JWTs } from './auth.types';
+import {
+  JwtPayload,
+  ExtendedJwtPayload,
+  JWTs,
+  RevokeOptions,
+} from './auth.types';
 
 @Injectable()
 export class AuthService {
@@ -56,13 +61,26 @@ export class AuthService {
     return tokens;
   }
 
-  async revokeAccessWithUserId(userId: number): Promise<void> {
-    this.tokensService.deleteIfExists({ userId });
-  }
+  async revokeAccess(options: RevokeOptions): Promise<void> {
+    const canUseUserId = options.usingUserId !== undefined;
+    const canUseToken = options.usingToken !== undefined;
+    let userId: number;
 
-  async revokeAccessWithToken(token: string): Promise<void> {
-    const { sub: userId } = this.decodeToken(token);
-    this.revokeAccessWithUserId(userId);
+    if (!canUseUserId && !canUseToken) {
+      throw new Error(
+        'Invalid revoke options. Please provide either a userId or a token.',
+      );
+    }
+
+    if (canUseUserId) {
+      userId = options.usingUserId;
+    } else {
+      const token = options.usingToken;
+      const { sub } = this.decodeToken(token);
+      userId = sub;
+    }
+
+    this.tokensService.deleteIfExists({ userId });
   }
 
   private async generateTokens(

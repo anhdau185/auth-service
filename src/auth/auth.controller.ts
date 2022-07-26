@@ -38,6 +38,6 @@ export class AuthController {
   @Post('logout')
   @HttpCode(204)
   logout(@Req() req: AuthenticatedRequest<number>) {
-    this.authService.revokeAccessWithUserId(req.user);
+    this.authService.revokeAccess({ usingUserId: req.user });
   }
 }

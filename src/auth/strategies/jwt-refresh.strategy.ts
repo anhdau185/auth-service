@@ -39,7 +39,7 @@ export class JwtRefreshStrategy extends PassportStrategy(
 
     if (isTokenAuthentic) return;
 
-    await this.authService.revokeAccessWithToken(token);
+    await this.authService.revokeAccess({ usingToken: token });
     throw new UnauthorizedException('Unauthentic token');
   }
 
