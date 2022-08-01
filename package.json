@@ -21,7 +21,9 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "typeorm": "typeorm-ts-node-commonjs",
     "migration:generate": "yarn build && yarn typeorm migration:generate -d ./src/db/dataSource.ts",
-    "migration:run": "yarn build && yarn typeorm migration:run -d ./src/db/dataSource.ts",
+    "migration:run": "yarn typeorm migration:run -d ./src/db/dataSource.ts",
+    "migration:run:dev": "yarn build && yarn migration:run",
+    "migration:run:prod": "yarn migration:run",
     "migration:revert": "yarn build && yarn typeorm migration:revert -d ./src/db/dataSource.ts"
   },
   "dependencies": {
