@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FindOptionsWhere, Repository } from 'typeorm';
 
@@ -28,12 +28,22 @@ export class UsersService {
   }
 
   async findOneUser(where: FindOptionsWhere<User>): Promise<User | null> {
-    return this.usersRepository.findOneBy(where);
+    const user = await this.usersRepository.findOneBy(where);
+    if (!user) {
+      throw new HttpException('User not found', 404);
+    }
+
+    return user;
   }
 
-  async updateUser(id: number, user: UserDto): Promise<User> {
-    await this.usersRepository.update(id, user);
-    return this.usersRepository.findOneBy({ id });
+  async updateUser(id: number, userData: UserDto): Promise<User> {
+    const user = await this.findOneUser({ id });
+    const updatedUserData = {
+      ...user,
+      ...userData,
+    };
+
+    return this.usersRepository.save(updatedUserData);
   }
 
   async deleteUser(id: number): Promise<void> {

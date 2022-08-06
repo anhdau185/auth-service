@@ -4,7 +4,6 @@ import {
   Delete,
   Get,
   HttpCode,
-  HttpException,
   Param,
   Patch,
   Post,
@@ -37,10 +36,6 @@ export class UsersController {
   @Get(':id')
   async getOne(@Param('id') id: string) {
     const user = await this.usersService.findOneUser({ id: parseInt(id) });
-    if (!user) {
-      throw new HttpException('User not found', 404);
-    }
-
     return concealCredentials(user);
   }
 
