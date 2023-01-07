@@ -47,7 +47,7 @@ POSTGRES_HOST=localhost
 POSTGRES_PORT=5432
 POSTGRES_USER=your_postgres_user
 POSTGRES_PASSWORD=your_postgres_password
-POSTGRES_DB=auth_service_dev01
+POSTGRES_DB=auth_service_dev
 JWT_SECRET_KEY=your_secret_key_of_choice
 JWT_EXPIRATION_TIME=300
 JWT_REFRESH_SECRET_KEY=your_refresh_secret_key_of_choice
@@ -59,7 +59,7 @@ JWT_REFRESH_EXPIRATION_TIME=1800
 Create a development database:
 
 ```sh
-createdb auth_service_dev01
+createdb auth_service_dev
 ```
 
 Build project and then run migrations:
@@ -76,17 +76,15 @@ yarn start:dev
 
 Now you should be ready to consume the service!
 
-## Alternative Setup: The Docker Way
+<!-- ## Alternative Setup: The Docker Way
 
 This service can also run as a containerized application. In fact, this is the preferable way in which the service should be deployed and run in a production environment because of the portability (and many more advantages) that containers provide.
 
 The following is an alternative setup guide using Docker containers.
 
-(TBD)
+(TBD) -->
 
 ## Usage
-
-<!-- Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources. -->
 
 ### API Endpoints
 
