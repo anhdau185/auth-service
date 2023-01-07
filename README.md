@@ -1,5 +1,3 @@
-<a name="readme-top"></a>
-
 # Auth Service
 
 Reliable, lightweight, dedicated JWT authentication as a microservice that provides separation of authentication concerns and brings scalibility to a distributed system.
@@ -10,7 +8,7 @@ Built with ❤️ and the [NestJS](https://nestjs.com/) framework.
 
 ## Getting Started
 
-The following is a quick guide on how to set up the service locally.
+The following is a guide to setting up the service locally.
 
 ### Prerequisites
 
@@ -54,9 +52,9 @@ JWT_REFRESH_SECRET_KEY=your_refresh_secret_key_of_choice
 JWT_REFRESH_EXPIRATION_TIME=1800
 ```
 
-## Additional Guide (Docker)
+## Alternative Setup: The Docker Way
 
-This is a guide to service setup using Docker.
+This service can also run as a containerized application. In fact, this is the preferable way in which the service should be deployed and run in a production environment because of the portability (and many more advantages) that containers provide. The following is an alternative setup guide using Docker.
 
 (TBD)
 
@@ -91,5 +89,3 @@ Don't forget to give the project a star! Thanks again!
 ## Contact
 
 Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com -->
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
