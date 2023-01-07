@@ -1,106 +1,95 @@
-<!-- PROJECT SHIELDS -->
+<a name="readme-top"></a>
 
-[![Contributors][contributors-shield]](https://github.com/anhdau185/auth-service/graphs/contributors)
-[![Forks][forks-shield]](https://github.com/anhdau185/auth-service/network/members)
-[![Stargazers][stars-shield]](https://github.com/anhdau185/auth-service/stargazers)
-[![Issues][issues-shield]](https://github.com/anhdau185/auth-service/issues)
-[![LinkedIn][linkedin-shield]](https://www.linkedin.com/in/anhddv)
+# Auth Service
 
-<!-- PROJECT LOGO -->
-<br />
-<div align="center">
-  <a href="https://github.com/anhdau185/auth-service">
-    <img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" />
-  </a>
-  <h3 align="center">Auth Service</h3>
-  <p align="center">
-    One authentication server for all of my personal products and services.
-    <!--
-    <br />
-    <a href="https://github.com/github_username/repo_name"><strong>Explore the docs »</strong></a>
-    <br />
-    <br />
-    <a href="https://github.com/github_username/repo_name">View Demo</a>
-    ·
-    <a href="https://github.com/github_username/repo_name/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/github_username/repo_name/issues">Request Feature</a>
-    -->
-  </p>
-</div>
+Reliable, lightweight, dedicated JWT authentication as a microservice that provides separation of authentication concerns and brings scalibility to a distributed system.
 
-<!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
-  </ol>
-</details>
+Built with ❤️ and the [NestJS](https://nestjs.com/) framework.
 
-## Description
+<!-- PROJECT SHIELDS - TBD -->
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Getting Started
 
-## Installation
+The following is a quick guide on how to set up the service locally.
 
-```bash
-$ npm install
+### Prerequisites
+
+- **Node.js 16** installed. You can use `v16.14.2` as recommended by the project.
+- **Yarn** package manager. Install it with:
+
+```sh
+npm install -g yarn
 ```
 
-## Running the app
+### Installation
 
-```bash
-# development
-$ npm run start
+1. Clone the repo
 
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+```sh
+git clone https://github.com/anhdau185/auth-service.git
 ```
 
-## Test
+2. Install packages
 
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+```sh
+yarn install
 ```
 
-## Support
+3. Configuration
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Create a `.env` file at the project's root with the following values:
 
-## Stay in touch
+```
+MODE=dev
+HOST=localhost
+PORT=3000
+POSTGRES_HOST=localhost
+POSTGRES_PORT=5432
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=your_postgres_password
+POSTGRES_DB=auth_service_dev01
+JWT_SECRET_KEY=your_secret_key_of_choice
+JWT_EXPIRATION_TIME=300
+JWT_REFRESH_SECRET_KEY=your_refresh_secret_key_of_choice
+JWT_REFRESH_EXPIRATION_TIME=1800
+```
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## Additional Guide (Docker)
 
-## License
+This is a guide to service setup using Docker.
 
-Nest is [MIT licensed](LICENSE).
+(TBD)
+
+## Usage
+
+<!-- Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources. -->
+
+(TBD)
+
+<!-- ## Roadmap
+
+- [ ] Feature 1
+- [ ] Feature 2
+- [ ] Feature 3
+    - [ ] Nested Feature
+
+See the [open issues](https://github.com/github_username/repo_name/issues) for a full list of proposed features (and known issues).
+
+## Contributing
+
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
+Don't forget to give the project a star! Thanks again!
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## Contact
+
+Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com -->
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
