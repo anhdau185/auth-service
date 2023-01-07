@@ -19,7 +19,9 @@ The following is a guide to setting up the service locally.
 npm install -g yarn
 ```
 
-### Installation
+- **PostgreSQL 13** installed, with the database server running on your `localhost`, port `5432`.
+
+### Installation & Setup
 
 1. Clone the repo
 
@@ -35,7 +37,7 @@ yarn install
 
 3. Configuration
 
-Create a `.env` file at the project's root with the following values:
+Create a `.env` file at the project's root directory with the following values:
 
 ```
 MODE=dev
@@ -43,7 +45,7 @@ HOST=localhost
 PORT=3000
 POSTGRES_HOST=localhost
 POSTGRES_PORT=5432
-POSTGRES_USER=postgres
+POSTGRES_USER=your_postgres_user
 POSTGRES_PASSWORD=your_postgres_password
 POSTGRES_DB=auth_service_dev01
 JWT_SECRET_KEY=your_secret_key_of_choice
@@ -52,9 +54,33 @@ JWT_REFRESH_SECRET_KEY=your_refresh_secret_key_of_choice
 JWT_REFRESH_EXPIRATION_TIME=1800
 ```
 
+4. Set up the database
+
+Create a development database:
+
+```sh
+createdb auth_service_dev01
+```
+
+Build project and then run migrations:
+
+```sh
+yarn build && yarn migration:run
+```
+
+5. Run the service in _watch mode_
+
+```sh
+yarn start:dev
+```
+
+Now you should be ready to consume the service!
+
 ## Alternative Setup: The Docker Way
 
-This service can also run as a containerized application. In fact, this is the preferable way in which the service should be deployed and run in a production environment because of the portability (and many more advantages) that containers provide. The following is an alternative setup guide using Docker.
+This service can also run as a containerized application. In fact, this is the preferable way in which the service should be deployed and run in a production environment because of the portability (and many more advantages) that containers provide.
+
+The following is an alternative setup guide using Docker containers.
 
 (TBD)
 
@@ -62,7 +88,16 @@ This service can also run as a containerized application. In fact, this is the p
 
 <!-- Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources. -->
 
+### API Endpoints
+
 (TBD)
+
+### Testing
+
+[Postman](https://www.postman.com/), a popular API platform, is a helpful tool to get used to the endpoints exposed from the service. Here are some useful Postman collections for testing:
+
+- APIs: (TBD)
+- Environment variables: (TBD)
 
 <!-- ## Roadmap
 

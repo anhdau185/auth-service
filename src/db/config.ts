@@ -3,6 +3,7 @@ import loadEnv from '../shared/utils/loadEnv';
 
 export const getOrmConfig = (): PostgresConnectionOptions => {
   loadEnv();
+
   return {
     type: 'postgres',
     host: process.env.POSTGRES_HOST,
