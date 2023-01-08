@@ -76,26 +76,38 @@ yarn start:dev
 
 Now you should be ready to consume the service!
 
-<!-- ## Alternative Setup: The Docker Way
+## Alternative Setup: The Docker Way
 
 This service can also run as a containerized application. In fact, this is the preferable way in which the service should be deployed and run in a production environment because of the portability (and many more advantages) that containers provide.
 
 The following is an alternative setup guide using Docker containers.
 
-(TBD) -->
+(TBD)
 
 ## Usage
 
-### API Endpoints
+This section lists out all the APIs exposed by the Auth Service as well as how to test them.
 
-(TBD)
+### API Documentation
+
+| API Name/Purpose    | Endpoint               | Request Body                           | Bearer Token Required? | Comment             |
+| ------------------- | ---------------------- | -------------------------------------- | ---------------------- | ------------------- |
+| Register a New User | `POST /users/signup`   | `{ name; username; password; scope? }` | No                     |
+| Get the User List   | `GET /users`           |                                        | Access Token           | Needs authorization |
+| Get a User          | `GET /users/:id`       |                                        | Access Token           | Needs authorization |
+| Update a User       | `PATCH /users/:id`     | `{ name; password }`                   | Access Token           | Needs authorization |
+| Delete a User       | `DELETE /users/:id`    |                                        | Access Token           | Needs authorization |
+| Sign In             | `POST /auth/login`     | `{ username; password }`               | No                     |
+| Authenticate a User | `POST /auth/protected` |                                        | Access Token           |
+| Refresh Tokens      | `POST /auth/refresh`   |                                        | Refresh Token          |
+| Sign Out            | `POST /auth/logout`    |                                        | Refresh Token          |
 
 ### Testing
 
-[Postman](https://www.postman.com/), a popular API platform, is a helpful tool to get used to the endpoints exposed from the service. Here are some useful Postman collections for testing:
+[Postman](https://www.postman.com/), a popular API platform, is a helpful tool to play around with and get used to the above APIs. Here are some useful collections for testing:
 
-- APIs: (TBD)
-- Environment variables: (TBD)
+- APIs: [Download here](https://gist.github.com/anhdau185/726c55cbf40cfef57a3ff377ee4576d9)
+- Environment: [Download here](https://gist.github.com/anhdau185/11cbdbc976f7fc6de5b22564ef63b0ca)
 
 <!-- ## Roadmap
 
