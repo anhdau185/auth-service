@@ -1,3 +1,4 @@
+version: '3.9'
 networks:
   common_network:
     driver: bridge
@@ -32,3 +33,14 @@ services:
       - db
     links:
       - db
+  dbadmin:
+    container_name: dbadmin
+    image: dpage/pgadmin4
+    networks:
+      - common_network
+    restart: always
+    ports:
+      - '${PGADMIN_PORT}:${PGADMIN_CONTAINER_PORT}'
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
