@@ -1,17 +1,31 @@
+networks:
+  common_network:
+    driver: bridge
 services:
   db:
+    container_name: db
     image: postgres:13-alpine
+    networks:
+      - common_network
+    restart: always
     ports:
-      - "${POSTGRES_PORT}:${POSTGRES_PORT}"
+      - '${POSTGRES_PORT}:${POSTGRES_PORT}'
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
+      PGUSER: ${POSTGRES_USER}
     volumes:
       - /tmp/pgdata:/var/lib/postgresql/data
-  web:
+  app:
+    container_name: app
     image: anhdau185/auth-service:latest
+    networks:
+      - common_network
+    restart: always
     ports:
-      - "${PORT}:${PORT}"
+      - '${PORT}:${PORT}'
     depends_on:
+      - db
+    links:
       - db
