@@ -5,6 +5,8 @@ networks:
 volumes:
   db_data:
     driver: local
+  pgadmin_data:
+    driver: local
 services:
   db:
     container_name: db
@@ -33,14 +35,17 @@ services:
       - db
     links:
       - db
-  dbadmin:
-    container_name: dbadmin
-    image: dpage/pgadmin4
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4:latest
     networks:
       - common_network
     restart: always
     ports:
-      - '${PGADMIN_PORT}:${PGADMIN_CONTAINER_PORT}'
+      - '${PGADMIN_PORT}:${PGADMIN_LISTEN_PORT}'
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+      PGADMIN_LISTEN_PORT: ${PGADMIN_LISTEN_PORT}
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
