@@ -91,7 +91,9 @@ docker compose version
 
 ### Installation & Setup
 
-1. Pull the necessary images from Docker Hub to your local machine
+1. Get the Docker images
+
+Pull all the images needed to get the project up from Docker Hub:
 
 ```sh
 # postgres image
@@ -99,6 +101,9 @@ docker pull postgres:13-alpine
 
 # backend app image
 docker pull anhdau185/auth-service:latest
+
+# pgadmin4 image
+docker pull dpage/pgadmin4:latest
 ```
 
 2. Configuration
@@ -164,6 +169,27 @@ docker build --tag anhdau185/auth-service:latest .
 ```
 
 Run the service with `docker compose` as normal.
+
+### Using pgAdmin 4 to manage PostgresSQL
+
+**pgAdmin** is an open-source administration and development tool for PostgreSQL. The web-based pgAdmin 4 is included in this project as a container running in parallel with the main service's containers.
+
+To manage, administer, or simply interact with your PostgresSQL databases:
+
+1. Navigate to `localhost:5050` on your browser
+
+2. Enter the admin credetials that you specified earlier in your `.env` file (`env.PGADMIN_DEFAULT_EMAIL` / `env.PGADMIN_DEFAULT_PASSWORD`)
+
+3. Connect to your database server (a.k.a. `db` container in this case) with:
+
+- Name: `db_container` (or whatever works for you)
+- Hostname: `db`
+- Port: can be obtained from `env.POSTGRES_PORT` (typically `5432`)
+- Maintenance database: `postgres`
+- Username: can be obtained from `env.POSTGRES_USER`
+- Password: can be obtained from `env.POSTGRES_PASSWORD`
+
+Happy managing your databases!
 
 ## Usage
 
