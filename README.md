@@ -43,7 +43,7 @@ Create a `.env` file by copying the project's sample file `.env.dev` (for local 
 cp .env.dev .env
 ```
 
-and fill out the empty fields in it with your own values.
+and fill out all the empty fields in it with your own values.
 
 4. Build the project
 
@@ -114,7 +114,7 @@ Create a `.env` file by copying the project's sample file `.env.prod` (for produ
 cp .env.prod .env
 ```
 
-and fill out the empty fields in it with your own values.
+and fill out all the empty fields in it with your own values.
 
 3. Run the service
 
