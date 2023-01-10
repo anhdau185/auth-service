@@ -91,7 +91,17 @@ docker compose version
 
 ### Installation & Setup
 
-1. Get the Docker images
+1. Configuration
+
+Create a `.env` file by copying the project's sample file `.env.prod` (for production deployment):
+
+```sh
+cp .env.prod .env
+```
+
+and fill out all the empty fields in it with your own values.
+
+2. Get the Docker images
 
 Pull all the images needed to get the project up and running from Docker Hub:
 
@@ -105,16 +115,6 @@ docker pull anhdau185/auth-service:latest
 # pgadmin4 image
 docker pull dpage/pgadmin4:latest
 ```
-
-2. Configuration
-
-Create a `.env` file by copying the project's sample file `.env.prod` (for production deployment):
-
-```sh
-cp .env.prod .env
-```
-
-and fill out all the empty fields in it with your own values.
 
 3. Run the service
 
