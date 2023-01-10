@@ -93,7 +93,7 @@ docker compose version
 
 1. Get the Docker images
 
-Pull all the images needed to get the project up from Docker Hub:
+Pull all the images needed to get the project up and running from Docker Hub:
 
 ```sh
 # postgres image
