@@ -6,3 +6,10 @@ node_modules
 test
 dist
 .env.*
+.eslintignore
+.eslintrc.js
+.gitignore
+.nvmrc
+.prettierignore
+.prettierrc
+README.md
