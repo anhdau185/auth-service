@@ -8,7 +8,7 @@ Built with ❤️ and the [NestJS](https://nestjs.com/) framework.
 
 ## Getting Started
 
-The following is a guide to setting up the service locally.
+The following is a guide to setting up Auth Service locally.
 
 ### Prerequisites
 
@@ -19,7 +19,7 @@ The following is a guide to setting up the service locally.
 npm install -g yarn
 ```
 
-- **PostgreSQL 13** installed, with the database server running on your `localhost`, port `5432`.
+- **PostgreSQL 13** installed. Make sure the database server has been started on your `localhost`, port `5432`.
 
 ### Installation & Setup
 
@@ -37,24 +37,21 @@ yarn install
 
 3. Configuration
 
-Create a `.env` file at the project's root directory with the following values:
+Create a `.env` file by copying the project's sample file `.env.dev` (for local development):
 
-```
-MODE=dev
-HOST=localhost
-PORT=3000
-POSTGRES_HOST=localhost
-POSTGRES_PORT=5432
-POSTGRES_USER=your_postgres_user
-POSTGRES_PASSWORD=your_postgres_password
-POSTGRES_DB=auth_service_dev
-JWT_SECRET_KEY=your_secret_key_of_choice
-JWT_EXPIRATION_TIME=300
-JWT_REFRESH_SECRET_KEY=your_refresh_secret_key_of_choice
-JWT_REFRESH_EXPIRATION_TIME=1800
+```sh
+cp .env.dev .env
 ```
 
-4. Set up the database
+and fill out the empty fields in it with your values of choice.
+
+4. Build the project
+
+```sh
+yarn build
+```
+
+5. Set up the database
 
 Create a development database:
 
@@ -62,27 +59,111 @@ Create a development database:
 createdb auth_service_dev
 ```
 
-Build project and then run migrations:
+and then run the schema migrations:
 
 ```sh
-yarn build && yarn migration:run
+yarn migration:run
 ```
 
-5. Run the service in _watch mode_
+6. Run the service in _watch mode_
 
 ```sh
 yarn start:dev
 ```
 
-Now you should be ready to consume the service!
+The service can now be accessed via `localhost:3000`.
 
-## Alternative Setup: The Docker Way
+## Using Docker
 
-This service can also run as a containerized application. In fact, this is the preferable way in which the service should be deployed and run in a production environment because of the portability (and many more advantages) that containers provide.
+Auth Service can also run as a containerized application. In fact, this is the preferable way in which the service should be deployed and run in a production environment because of the portability (and many more advantages) that containers provide.
 
 The following is an alternative setup guide using Docker containers.
 
-(TBD)
+### Prerequisites
+
+- Latest version of [Docker Desktop](https://www.docker.com/products/docker-desktop) installed.
+- Check if `docker` and `docker compose` are running:
+
+```sh
+docker version
+docker compose version
+```
+
+### Installation & Setup
+
+1. Pull the necessary images from Docker Hub to your local machine
+
+```sh
+# postgres image
+docker pull postgres:13-alpine
+
+# backend app image
+docker pull anhdau185/auth-service:latest
+```
+
+2. Configuration
+
+Create a `.env` file by copying the project's sample file `.env.prod` (for production deployment):
+
+```sh
+cp .env.prod .env
+```
+
+and fill out the empty fields in it with your values of choice.
+
+3. Run the service
+
+Run the service as containers in the background with `docker compose`:
+
+```sh
+docker compose up --detach
+```
+
+The service can now be accessed via `localhost:3000`.
+
+4. Schema migrations
+
+If you are running the service for the first time or anytime the database schema is changed (which leads to a generation of a new migration file), you will need to run schema migrations before the service becomes actually usable.
+
+To do this with your backend app running inside a Docker container, run the command:
+
+```sh
+docker exec app yarn migration:run
+```
+
+5. Stop the service
+
+If you'd want to stop (and then remove) the service's running containers as a whole, run the command:
+
+```sh
+docker compose down
+```
+
+### How to build the backend app container locally to test my code changes?
+
+1. Remove the existing Docker image to avoid a duplicate
+
+Run this command and get the image ID of `anhdau185/auth-service:latest`:
+
+```sh
+docker images
+```
+
+and then remove that image with the ID you obtained:
+
+```sh
+docker rmi <image_ID>
+```
+
+2. Rebuild the image
+
+Rebuild the image as the name `anhdau185/auth-service:latest`:
+
+```sh
+docker build --tag anhdau185/auth-service:latest .
+```
+
+Run the service with `docker compose` as normal.
 
 ## Usage
 
