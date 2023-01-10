@@ -157,7 +157,7 @@ docker rmi <image_ID>
 
 2. Rebuild the image
 
-Rebuild the image as the name `anhdau185/auth-service:latest`:
+Rebuild the image under the name `anhdau185/auth-service:latest`:
 
 ```sh
 docker build --tag anhdau185/auth-service:latest .
