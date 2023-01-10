@@ -1,6 +1,9 @@
 networks:
   common_network:
     driver: bridge
+volumes:
+  db_data:
+    driver: local
 services:
   db:
     container_name: db
@@ -16,7 +19,7 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
       PGUSER: ${POSTGRES_USER}
     volumes:
-      - /tmp/pgdata:/var/lib/postgresql/data
+      - db_data:/var/lib/postgresql/data
   app:
     container_name: app
     image: anhdau185/auth-service:latest
