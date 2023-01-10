@@ -139,7 +139,7 @@ If you'd want to stop (and then remove) the service's running containers as a wh
 docker compose down
 ```
 
-### How to build the backend app container locally to test my code changes?
+### How to build the backend app container locally to test your code changes
 
 1. Remove the existing Docker image to avoid a duplicate
 
