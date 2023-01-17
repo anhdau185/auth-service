@@ -37,7 +37,7 @@ yarn install
 
 3. Configuration
 
-Create a `.env` file by copying the project's sample file `.env.dev` (for local development):
+Create a `.env` file by copying the project's sample file `.env.dev`:
 
 ```sh
 cp .env.dev .env
@@ -73,7 +73,7 @@ yarn start:dev
 
 The service can now be accessed via `localhost:3000`.
 
-## Using Docker
+## Setting up Using Docker
 
 Auth Service can also run as a containerized application. In fact, this is the preferable way in which the service should be deployed and run in a production environment because of the portability (and many more advantages) that containers provide.
 
@@ -93,7 +93,7 @@ docker compose version
 
 1. Configuration
 
-Create a `.env` file by copying the project's sample file `.env.prod` (for production deployment):
+Create a `.env` file by copying the project's sample file `.env.prod`:
 
 ```sh
 cp .env.prod .env
@@ -144,33 +144,7 @@ If you'd want to stop (and then remove) the service's running containers as a wh
 docker compose down
 ```
 
-### How to build the backend app container locally to test your code changes
-
-1. Remove the existing Docker image to avoid a duplicate
-
-Run this command and get the image ID of `anhdau185/auth-service:latest`:
-
-```sh
-docker images
-```
-
-and then remove that image with the ID you obtained:
-
-```sh
-docker rmi <image_ID>
-```
-
-2. Rebuild the image
-
-Rebuild the image under the name `anhdau185/auth-service:latest`:
-
-```sh
-docker build --tag anhdau185/auth-service:latest .
-```
-
-Run the service with `docker compose` as normal.
-
-### Using pgAdmin 4 to manage PostgresSQL
+### Using pgAdmin 4 to manage PostgreSQL
 
 **pgAdmin** is an open-source administration and development tool for PostgreSQL. The web-based pgAdmin 4 is included in this project as a container running in parallel with the main service's containers.
 
@@ -190,6 +164,10 @@ To manage, administer, or simply interact with your PostgresSQL databases:
 - Password: can be obtained from `env.POSTGRES_PASSWORD`
 
 Happy managing your databases!
+
+## Workflows
+
+Check out [this doc](https://github.com/anhdau185/application-infrastructure/blob/main/docs/auth-service/workflows.md) for how to develop the service as well as how to deploy and monitor it on a production environment.
 
 ## Usage
 
