@@ -194,16 +194,24 @@ This section lists out all the APIs exposed by the Auth Service as well as how t
 - APIs: [Download here](https://gist.github.com/anhdau185/726c55cbf40cfef57a3ff377ee4576d9)
 - Environment: [Download here](https://gist.github.com/anhdau185/11cbdbc976f7fc6de5b22564ef63b0ca)
 
-<!-- ## Roadmap
+## Roadmap
 
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-    - [ ] Nested Feature
+- [x] Authentication with Local Strategy
+- [x] JWT Authentication with Refresh Tokens
+- [x] Rotating & Invalidating Refresh Tokens
+- [ ] User Authorization
+  - [ ] Admin
+  - [ ] User
+  - [ ] Guest (Unauthorized)
+- [ ] API versioning
 
-See the [open issues](https://github.com/github_username/repo_name/issues) for a full list of proposed features (and known issues).
+See [open issues](https://github.com/anhdau185/auth-service/issues) for a full list of proposed features (and known issues).
 
-## Contributing
+## Contact
+
+Hi I'm Anh Dau, author of this repo. You can reach out to me with the contact info at [thecodinglad.com/about](https://thecodinglad.com/about).
+
+<!-- ## Contributing
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
@@ -214,8 +222,4 @@ Don't forget to give the project a star! Thanks again!
 2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
 3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## Contact
-
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com -->
+5. Open a Pull Request -->
