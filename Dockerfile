@@ -3,11 +3,14 @@ FROM node:16-alpine
 WORKDIR /app
 
 RUN apk add --no-cache bash
-RUN yarn global add @nestjs/cli
+
+RUN yarn global add @nestjs/cli \
+  && yarn cache clean
 
 COPY ["package.json", "yarn.lock", "./"]
 
-RUN yarn install --prod --frozen-lockfile
+RUN yarn install --prod --frozen-lockfile \
+  && yarn cache clean
 
 COPY . .
 
