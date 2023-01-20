@@ -23,8 +23,8 @@ services:
       PGUSER: ${POSTGRES_USER}
     volumes:
       - db_data:/var/lib/postgresql/data
-  app:
-    container_name: app
+  auth:
+    container_name: auth
     image: anhdau185/auth-service:latest
     networks:
       - common_network
