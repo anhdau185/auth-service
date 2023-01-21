@@ -126,7 +126,7 @@ docker compose up --detach
 
 The service can now be accessed via `localhost:3000`.
 
-4. Schema migrations
+4. Schema migrations (for the first spin-up)
 
 If you are running the service for the first time or anytime the database schema is changed (which leads to a generation of a new migration file), you will need to run schema migrations before the service becomes actually usable.
 
@@ -135,6 +135,8 @@ To do this with your backend app running inside a Docker container, run the comm
 ```sh
 docker exec auth yarn migration:run
 ```
+
+The containerized service is now all set and ready for use!
 
 5. Stop the service
 
