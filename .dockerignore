@@ -9,6 +9,7 @@ dist
 .eslintignore
 .eslintrc.js
 .gitignore
+.gitattributes
 .nvmrc
 .prettierignore
 .prettierrc
