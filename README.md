@@ -1,7 +1,9 @@
 # Auth Service
 
 <p align="center">
-  <img src="https://dl.dropboxusercontent.com/s/7etxz4ipgt4l5y5/auth-icon.png" width="180" alt="Dish Logo">
+  <a href="https://github.com/anhdau185/auth-service#readme" target="_blank">
+    <img src="https://dl.dropboxusercontent.com/s/7etxz4ipgt4l5y5/auth-icon.png" width="180" alt="Dish Logo">
+  </a>
 </p>
 
 Reliable, lightweight, dedicated JWT authentication as a microservice that provides separation of authentication concerns and brings scalibility to a distributed system.
