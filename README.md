@@ -191,7 +191,7 @@ This section lists out all the APIs exposed by the Auth Service as well as how t
 
 ### Testing
 
-[Postman](https://www.postman.com/), a popular API platform, is a helpful tool to play around with and get used to the above APIs. Here are some sample collections that can be useful for testing these APIs:
+[Postman](https://www.postman.com), a popular API platform, is a helpful tool to play around with and get used to the above APIs. Here are some sample collections that can be useful for testing these APIs:
 
 - APIs: [Download here](https://gist.github.com/anhdau185/726c55cbf40cfef57a3ff377ee4576d9)
 - Environment: [Download here](https://gist.github.com/anhdau185/11cbdbc976f7fc6de5b22564ef63b0ca)
