@@ -1,5 +1,9 @@
 # Auth Service
 
+<p align="center">
+  <img src="https://dl.dropboxusercontent.com/s/7etxz4ipgt4l5y5/auth-icon.png" width="180" alt="Dish Logo">
+</p>
+
 Reliable, lightweight, dedicated JWT authentication as a microservice that provides separation of authentication concerns and brings scalibility to a distributed system.
 
 Built with ❤️ and the [NestJS](https://nestjs.com/) framework.
