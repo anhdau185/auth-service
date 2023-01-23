@@ -186,14 +186,14 @@ This section lists out all the APIs exposed by the Auth Service as well as how t
 | API Name/Purpose    | Endpoint               | Request Body                           | Bearer Token Required? | Comment             |
 | ------------------- | ---------------------- | -------------------------------------- | ---------------------- | ------------------- |
 | Register a New User | `POST /users/signup`   | `{ name; username; password; scope? }` | No                     |
-| Get the User List   | `GET /users`           |                                        | Access Token           | Needs authorization |
-| Get a User          | `GET /users/:id`       |                                        | Access Token           | Needs authorization |
-| Update a User       | `PATCH /users/:id`     | `{ name; password }`                   | Access Token           | Needs authorization |
-| Delete a User       | `DELETE /users/:id`    |                                        | Access Token           | Needs authorization |
+| Get the User List   | `GET /users`           |                                        | Yes (Access Token)     | Needs authorization |
+| Get a User          | `GET /users/:id`       |                                        | Yes (Access Token)     | Needs authorization |
+| Update a User       | `PATCH /users/:id`     | `{ name; password }`                   | Yes (Access Token)     | Needs authorization |
+| Delete a User       | `DELETE /users/:id`    |                                        | Yes (Access Token)     | Needs authorization |
 | Sign In             | `POST /auth/login`     | `{ username; password }`               | No                     |
-| Authenticate a User | `POST /auth/protected` |                                        | Access Token           |
-| Refresh Tokens      | `POST /auth/refresh`   |                                        | Refresh Token          |
-| Sign Out            | `POST /auth/logout`    |                                        | Refresh Token          |
+| Authenticate a User | `POST /auth/protected` |                                        | Yes (Access Token)     |
+| Refresh Tokens      | `POST /auth/refresh`   |                                        | Yes (Refresh Token)    |
+| Sign Out            | `POST /auth/logout`    |                                        | Yes (Refresh Token)    |
 
 ### Testing
 
