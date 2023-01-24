@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://github.com/anhdau185/auth-service#readme" target="_blank">
-    <img src="https://dl.dropboxusercontent.com/s/7etxz4ipgt4l5y5/auth-icon.png" width="180" alt="Dish Logo">
+    <img src="https://dl.dropboxusercontent.com/s/7etxz4ipgt4l5y5/auth-icon.png" width="180" alt="Auth Logo">
   </a>
 </p>
 
