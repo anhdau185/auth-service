@@ -156,7 +156,7 @@ docker compose down
 
 **pgAdmin** is an open-source administration and development tool for PostgreSQL. The web-based pgAdmin 4 is included in this project as a container running in parallel with the main service's containers.
 
-To manage, administer, or simply interact with your PostgresSQL databases:
+To manage, administer, or simply interact with your PostgreSQL databases:
 
 1. Navigate to `localhost:5050` on your browser
 
